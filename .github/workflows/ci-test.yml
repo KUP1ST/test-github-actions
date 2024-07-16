@@ -54,6 +54,12 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ ubuntu-latest ]
+        version: [ "A", "B" ]
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -79,7 +85,7 @@ jobs:
             github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: "Help me with ${{github.run_id}}"
+              title: "Help me with ${{github.run_id}} & v${{ matrix.version }}-${{ matrix.os }}"
               });
 
   env-step-show:
